@@ -1,0 +1,72 @@
+Configuring Git (once in a lifetime):
+	$ git config --global user.name "King Kong" 		--> initialise user name
+	$ git config --global user.email "king-kong@gmail.com"	--> initialise user email
+	$ git config --global color.ui true 			--> for highlight and augment readability
+	$ git config --list 					--> list all configurations
+	$ git config --global --unset [configurationName]	--> unset one of the global config
+	
+
+Local repository: In the repository
+	$ git init						--> initialise an empty git repository (folder .git)
+	$ git status						--> check the status of the box (does it store anything yet?)
+	$ git diff						--> shows you the exact lines added and removed
+	$ git diff --staged					--> compares your staged changes to your last commit
+
+Staging files:
+	$ git add [filenames]					--> adds a set of files to the root directory (cache)
+	$ git add .						--> add all files in the root dir
+	$ git add --all						--> add all files
+	$ git add -p						--> interactively chose hunks of patches between index and the work tree and add them to the index
+	$ git rm --cached [filename]				--> removes the add of the filename
+	$ git reset [filename]					--> equivalen to git rm --cached #oppositOfAdd
+	
+
+
+Commits:
+	$ git commit -m "add the message here"			--> moves the added files the staging area to the local repository
+	$ git commit -a -m "message"				--> -a stands for add (avoid running two commands) files that are already listed in the index
+	$ git log --graph					--> see the commit graph
+	$ git log --online					--> prints only the subject line in commits
+	
+	$ git reset --soft HEAD^				--> undo the last commit in the current branch
+	$ git add [fileIForgotToAddInTheLastCommit]		--> amend (modifies) last commit by adding a new file
+	$ git commit --amend -m "last add with last commit"	--> read previous line
+	$ git rebase -i HEAD~3					--> rewrite interactively "-i" every commit from last three commits+the current one
+	$ git filter-branch --tree-filter 'rm -f passwords.txt' HEAD --> remove the file from the entire history | do not use this command unless mastered
+	
+
+Remote repository: (create a new project on git then doo the following)
+	$ git remote add origin https://website..		--> binds the local repository to the remote repository
+	$ git push -u origin master				--> push to remote repository with server origin and branch master | -u is for git push next time
+	$ git remote -v						--> list the remote repositories
+	$ git clone https//website				--> copies the repository from remote to local
+	$ git pull						--> pulls changes on the remote to the local
+	
+
+Branches (paths):
+	$ git branch						--> lists branches | * marks the current branch
+	$ git branch [BranchName]				--> creates a new branch
+	$ git checkout [BranchName]				--> switches to the branch BranchName
+	$ git checkout -b [NewBranchName]			--> equivalent to branch and checkout commands combined
+	
+	$ git checkout master					--> with the next command merge branches
+	$ git merge [BranchName]				--> merge the master with BranchName
+	$ git branch -d [BranchName]				--> deletes the branch BranchName
+	 
+	
+Others:
+	$ git bisect <subcommand> <option>			--> uses a binary search algorithm to find which commit in your project’s history introduced a bug
+		precise which version is good and which is bad, then asks you at each step if good or bad ex:
+			$ git bisect start
+			$ git bisect bad                 # Current version is bad
+			$ git bisect good v2.6.13-rc2    # v2.6.13-rc2 is known to be good
+			Bisecting: 675 revisions left to test after this (roughly 10 steps)
+			$ git bisect good ... etc
+			
+	$ git revert <commit> (part of the hexa hash)		--> revert all the changes done at this commit
+	$ git revert HEAD~3					--> revert the changes in the fourth last commit
+	$ git revert --continue
+	$ git revert --quit
+	$ git revert --abort
+
+
